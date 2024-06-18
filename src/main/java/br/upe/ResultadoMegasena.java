@@ -5,7 +5,6 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClients;
-import org.json.*;
 
 
 /**
@@ -15,23 +14,7 @@ import org.json.*;
  */
 
 public class ResultadoMegasena {
-    /** URL que possui as dezenas sorteadas. */
-    private final static String URL = "https://loteriascaixa-api.herokuapp.com/api/megasena/latest"
-    ;
-
-    /** Marcação inicial para extrair as dezenas do retorno HTML. */
-    private final static String MARCA_INICIAL_RETORNO_NAO_UTIL = "<div id='concurso_resultado'>";
-
-    /** Marcação final para extrair as dezenas do retorno HTML. */
-    private final static String MARCA_FINAL_RETORNO_NAO_UTIL = "</div>";
-
-    /**
-     * Método que se conecta ao site da CEF para obter as dezenas
-     * do último sorteio.
-     * 
-     * @return array de Strings, onde cada elemento é uma dezena
-     *         sorteada.
-     */
+    private final static String URL = "https://loteriascaixa-api.herokuapp.com/api/megasena/latest";
     public static String[] obtemUltimoResultado() {
         // Criação do cliente HTTP que fará a conexão com o site
         HttpClient httpclient = HttpClients.createDefault();
@@ -59,18 +42,15 @@ obtemUltimoResultado().
 * @return array de Strings, onde cada elemento é uma dezena
 sorteada.
 */
-private static String[] obterDezenas(String JSON) {
-        JSONObject data = new JSONObject(JSON);
-        try {
-            JSONArray dezenasArray = data.getJSONArray("dezenas");
-            String[] dezenasString = new String[dezenasArray.length()];
-            for (int i = 0; i < dezenasArray.length(); i++) {
-                dezenasString[i] = dezenasArray.get(i).toString();
-            }
-            return dezenasString;
-        } catch (Exception e) {
-            throw new RuntimeException("Um erro inesperado ocorreu.", e);
-        }
-
+    private static String[] obterDezenas(String html) {
+        // Posição inicial de onde começam as dezenas
+        int parteInicial = html.indexOf(MARCA_INICIAL_RETORNO_NAO_UTIL) + MARCA_INICIAL_RETORNO_NAO_UTIL.length();
+        // Posição final de onde terminam as dezenas
+        int parteFinal = html.indexOf(MARCA_FINAL_RETORNO_NAO_UTIL, parteInicial);
+        // Substring montada com base nas posições, com remoção de espaços e colchetes
+        String extracao = html.substring(parteInicial, parteFinal).replaceAll("[\\[\\] ]", "");
+        // Criação de array, com base no método split(), separando por vírgula
+        String[] numeros = extracao.split(",");
+        return numeros;
     }
 }
