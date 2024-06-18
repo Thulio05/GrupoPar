@@ -18,8 +18,8 @@ public class ResultadoMegasenaTest extends TestCase {
      */
     @Test
     public void testObtemUltimoResultado() {
-        String[] resultadoFinal = ResultadoMegasena.obtemUltimoResultado();
-        assertNotNull(resultadoFinal);
-        assertTrue(resultadoFinal.length == NUMERO_DE_DEZENAS);
+        String[] ultimoResultado = ResultadoMegasena.obtemUltimoResultado();
+        assertNotNull(ultimoResultado);
+        assertTrue(ultimoResultado.length == NUMERO_DE_DEZENAS);
     }
 }
