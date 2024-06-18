@@ -6,3 +6,4 @@ public class Main {
         for(String num: resultado) System.out.println(num);
     }
 }
+
