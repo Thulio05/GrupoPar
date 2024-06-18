@@ -5,7 +5,6 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClients;
-import org.json.*;
 
 
 /**
@@ -43,18 +42,15 @@ obtemUltimoResultado().
 * @return array de Strings, onde cada elemento é uma dezena
 sorteada.
 */
-private static String[] obterDezenas(String JSON) {
-        JSONObject data = new JSONObject(JSON);
-        try {
-            JSONArray dezenasArray = data.getJSONArray("dezenas");
-            String[] dezenasString = new String[dezenasArray.length()];
-            for (int i = 0; i < dezenasArray.length(); i++) {
-                dezenasString[i] = dezenasArray.get(i).toString();
-            }
-            return dezenasString;
-        } catch (Exception e) {
-            throw new RuntimeException("Um erro inesperado ocorreu.", e);
-        }
-
+    private static String[] obterDezenas(String html) {
+        // Posição inicial de onde começam as dezenas
+        int parteInicial = html.indexOf(MARCA_INICIAL_RETORNO_NAO_UTIL) + MARCA_INICIAL_RETORNO_NAO_UTIL.length();
+        // Posição final de onde terminam as dezenas
+        int parteFinal = html.indexOf(MARCA_FINAL_RETORNO_NAO_UTIL, parteInicial);
+        // Substring montada com base nas posições, com remoção de espaços e colchetes
+        String extracao = html.substring(parteInicial, parteFinal).replaceAll("[\\[\\] ]", "");
+        // Criação de array, com base no método split(), separando por vírgula
+        String[] numeros = extracao.split(",");
+        return numeros;
     }
 }
