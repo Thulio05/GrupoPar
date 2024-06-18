@@ -15,23 +15,6 @@ import org.json.*;
  */
 
 public class ResultadoMegasena {
-    /** URL que possui as dezenas sorteadas. */
-    private final static String URL = "https://loteriascaixa-api.herokuapp.com/api/megasena/latest"
-    ;
-
-    /** Marcação inicial para extrair as dezenas do retorno HTML. */
-    private final static String MARCA_INICIAL_RETORNO_NAO_UTIL = "<div id='concurso_resultado'>";
-
-    /** Marcação final para extrair as dezenas do retorno HTML. */
-    private final static String MARCA_FINAL_RETORNO_NAO_UTIL = "</div>";
-
-    /**
-     * Método que se conecta ao site da CEF para obter as dezenas
-     * do último sorteio.
-     * 
-     * @return array de Strings, onde cada elemento é uma dezena
-     *         sorteada.
-     */
     public static String[] obtemUltimoResultado() {
         // Criação do cliente HTTP que fará a conexão com o site
         HttpClient httpclient = HttpClients.createDefault();
