@@ -15,8 +15,8 @@ import org.json.*;
  */
 
 public class ResultadoMegasena {
+    private final static String URL = "https://loteriascaixa-api.herokuapp.com/api/megasena/latest";
     public static String[] obtemUltimoResultado() {
-        private final static String URL = "https://loteriascaixa-api.herokuapp.com/api/megasena/latest"
         // Criação do cliente HTTP que fará a conexão com o site
         HttpClient httpclient = HttpClients.createDefault();
         
