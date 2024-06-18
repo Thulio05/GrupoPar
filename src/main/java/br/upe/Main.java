@@ -8,7 +8,7 @@ import org.json.JSONObject;
  *
  */
 
-//hello, david
+//hello, deyvid
 public class Main {
     public static void main( String[] args ){
         String[] resultado = ResultadoMegasena.obtemUltimoResultado();
